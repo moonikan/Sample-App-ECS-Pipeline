@@ -1,0 +1,51 @@
+{
+  "AWSTemplateFormatVersion":"2010-09-09",
+	"Parameters": {
+		"Tag": {
+			"Type": "String",
+			"Default": "latest"
+		},
+		"DesiredCount": {
+			"Type": "Number",
+			"Default": 1
+		},
+		"Cluster": {
+			"Type": "String",
+			"Default": "YOURECSCLUSTER"
+		},
+		"Repository": {
+			"Type": "String",
+			"Default": "YOUR ECR REPO NAME"
+		}
+	},
+	"Resources": {
+		"Service": {
+			"Type": "AWS::ECS::Service",
+			"Properties": {
+				"Cluster": { "Ref": "Cluster" },
+				"DesiredCount": { "Ref": "DesiredCount" },
+				"TaskDefinition": { "Ref": "TaskDefinition1" }
+			}
+		},
+		"TaskDefinition1": {
+			"Type": "AWS::ECS::TaskDefinition",
+			"Properties": {
+				"ContainerDefinitions": [
+				{
+					"Name": "awsstar-app-ecs",
+					"Image": "YOURREPONAME:latest",
+					"Cpu": "1",
+					"PortMappings": [ 
+					{
+						"ContainerPort": "8080",
+						"HostPort": "80"
+					} 
+					],
+					"Memory": "512",
+					"Essential": "true"
+				}
+			  ] 
+			}
+		}
+	}
+}
