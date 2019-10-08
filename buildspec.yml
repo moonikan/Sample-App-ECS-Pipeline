@@ -10,9 +10,9 @@ env:
 phases:
   pre_build:
     commands:
-      - sudo apt-get update -y && apt-get install jq -y
+      - apt-get update -y && apt-get install jq -y
       - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
   build:
     commands:
       - echo Build started on `date`
